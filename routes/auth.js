@@ -4,8 +4,6 @@ const JWT = require('jsonwebtoken');
 const Bcrypt = require('bcryptjs');
 const { registerValidation, loginValidation } = require('../validate');
 const verify = require('./tokenVerify');
-
-
 // Registration Route
 router.post('/signup/', async (req, res) => {
 
@@ -49,8 +47,6 @@ router.post('/signup/', async (req, res) => {
     }
 
 });
-
-
 // Login Route
 router.post('/signin/', async (req, res) => {
 
@@ -60,23 +56,19 @@ router.post('/signin/', async (req, res) => {
         statusCode: 400,
         message: error.details[0].message
     });
-
     // Existing user check
     const userExist = await userSchema.findOne({ email: req.body.email });
     if (!userExist) return res.send({
         statusCode: 400,
         message: "Email or password is incorrect"
     });
-
     //Compare Password
     const validPassword = Bcrypt.compareSync(req.body.password, userExist.password);
     if (!validPassword) return res.send({
         statusCode: 400,
         message: "Email or password is incorrect"
     });
-
     const token = JWT.sign({ _id: userExist._id }, process.env.TOKEN_SECRET);
-
     res.header('auth-token', token).send({
         statusCode: 200,
         message: "Logged In !!"
