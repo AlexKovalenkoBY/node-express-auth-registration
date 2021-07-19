@@ -20,6 +20,8 @@ let db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.PPO = require("../db/models/ppo")(sequelize, Sequelize);
+//db.PPO = require("../models/ppo")(sequelize, Sequelize);
+//db.USERS = require("../models/user")(sequelize, Sequelize);
+db.postSchema = require("../models/post")(sequelize, Sequelize);
 
 module.exports = db;
